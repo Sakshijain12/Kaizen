@@ -5,7 +5,7 @@ import time
 
 import streamlit as st
 
-from driftfixer import config, pipeline
+from kaizen import config, pipeline
 
 APP_NAME = "Kaizen"
 TAGLINE = "Your dependencies upgrade themselves: researched, rewritten and proven against your own tests."

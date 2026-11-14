@@ -1,9 +1,9 @@
-"""AgentField node: exposes the docs-drift-fixer as reasoners/skills on the control plane.
+"""AgentField node "kaizen": exposes the Kaizen upgrade agent as reasoners/skills on the control plane.
 
   af server                # terminal 1 — control plane + dashboard on :8080
-  python agent.py          # terminal 2 — registers node "docs-drift-fixer"
+  python agent.py          # terminal 2 — registers node "kaizen"
 
-  curl -X POST http://localhost:8080/api/v1/execute/docs-drift-fixer.fix_repo \
+  curl -X POST http://localhost:8080/api/v1/execute/kaizen.fix_repo \
        -H 'Content-Type: application/json' -d '{"input": {"repo": "demo_repo"}}'
 """
 import asyncio
@@ -12,17 +12,17 @@ from pathlib import Path
 from pydantic import BaseModel
 
 from agentfield import Agent, AIConfig, HarnessConfig
-from driftfixer import changelog, config, deps, pipeline
+from kaizen import changelog, config, deps, pipeline
 
 # LLM: Nosana's OpenAI-compatible inference, routed through AgentField's LiteLLM layer.
 try:
-    from driftfixer import llm
+    from kaizen import llm
     _, _model, _ = llm.backend()
 except Exception:
     _model = config.NOSANA_MODEL or "auto"
 
 app = Agent(
-    node_id="docs-drift-fixer",
+    node_id="kaizen",
     description="Watches dependency changelogs, finds breaking changes, rewrites code, verifies in Daytona.",
     tags=["dependencies", "migration", "tavily", "daytona", "nosana", "codeaf"],
     ai_config=AIConfig(model=f"openai/{_model}", api_base=config.NOSANA_BASE_URL,

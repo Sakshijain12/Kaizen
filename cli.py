@@ -1,7 +1,7 @@
 """CLI: python cli.py <repo path or git URL>"""
 import sys
 
-from driftfixer import pipeline
+from kaizen import pipeline
 
 ICON = {"start": "⏳", "done": "✅", "fail": "❌", "log": "  ·", "info": "ℹ️ ", "result": "🏁"}
 

@@ -75,10 +75,10 @@ Public mode switches on the safety rails for strangers' code:
 
 | Partner | Role | Code |
 |---|---|---|
-| **Daytona** | Every test run happens in a fresh, isolated sandbox: upload repo → `pip install` upgraded deps → `pytest` (baseline) → upload patched files → `pytest` again in the retry loop → delete. | [`driftfixer/sandbox.py`](driftfixer/sandbox.py) `DaytonaRunner` (`Daytona().create`, `fs.upload_files`, `process.exec`, `sandbox.delete`) |
-| **Tavily** | Live changelog research: `search(search_depth="advanced", include_answer=...)` finds release notes and migration guides, then `extract(query=..., chunks_per_source=5)` pulls the relevant parts of the full pages. | [`driftfixer/changelog.py`](driftfixer/changelog.py) |
-| **Nosana** | Decentralized GPU inference through the OpenAI-compatible endpoint `inference.nosana.com/v1`. **Embeddings** (`nemotron-3-embed-1b`) rank the Tavily passages to cite evidence for each breaking change. A **chat model**, when one is live (auto-detected from `/v1/models`), does breaking-change analysis and code rewriting. | [`driftfixer/evidence.py`](driftfixer/evidence.py), [`driftfixer/llm.py`](driftfixer/llm.py), [`driftfixer/analyzer.py`](driftfixer/analyzer.py), [`driftfixer/rewriter.py`](driftfixer/rewriter.py) |
-| **AgentField / CodeAF** | The agent is an AgentField node (`docs-drift-fixer`) with skills `check_drift` and `research_changelog`, and reasoners `extract_breaking_changes` (`app.ai` → Nosana through LiteLLM with a Pydantic schema), `fix_repo` (the full pipeline, progress through `app.note`) and `migrate_with_codeaf` (`app.harness` → **CodeAF**). Set `REWRITE_ENGINE=codeaf` to make CodeAF (`codeaf do ... --json`) the rewrite engine in the pipeline. | [`agent.py`](agent.py), [`driftfixer/rewriter.py`](driftfixer/rewriter.py) `rewrite_codeaf` |
+| **Daytona** | Every test run happens in a fresh, isolated sandbox: upload repo → `pip install` upgraded deps → `pytest` (baseline) → upload patched files → `pytest` again in the retry loop → delete. | [`kaizen/sandbox.py`](kaizen/sandbox.py) `DaytonaRunner` (`Daytona().create`, `fs.upload_files`, `process.exec`, `sandbox.delete`) |
+| **Tavily** | Live changelog research: `search(search_depth="advanced", include_answer=...)` finds release notes and migration guides, then `extract(query=..., chunks_per_source=5)` pulls the relevant parts of the full pages. | [`kaizen/changelog.py`](kaizen/changelog.py) |
+| **Nosana** | Decentralized GPU inference through the OpenAI-compatible endpoint `inference.nosana.com/v1`. **Embeddings** (`nemotron-3-embed-1b`) rank the Tavily passages to cite evidence for each breaking change. A **chat model**, when one is live (auto-detected from `/v1/models`), does breaking-change analysis and code rewriting. | [`kaizen/evidence.py`](kaizen/evidence.py), [`kaizen/llm.py`](kaizen/llm.py), [`kaizen/analyzer.py`](kaizen/analyzer.py), [`kaizen/rewriter.py`](kaizen/rewriter.py) |
+| **AgentField / CodeAF** | The agent is an AgentField node (`kaizen`) with skills `check_drift` and `research_changelog`, and reasoners `extract_breaking_changes` (`app.ai` → Nosana through LiteLLM with a Pydantic schema), `fix_repo` (the full pipeline, progress through `app.note`) and `migrate_with_codeaf` (`app.harness` → **CodeAF**). Set `REWRITE_ENGINE=codeaf` to make CodeAF (`codeaf do ... --json`) the rewrite engine in the pipeline. | [`agent.py`](agent.py), [`kaizen/rewriter.py`](kaizen/rewriter.py) `rewrite_codeaf` |
 
 ### Run as an AgentField agent
 
@@ -86,7 +86,7 @@ Public mode switches on the safety rails for strangers' code:
 curl -fsSL https://agentfield.ai/install.sh | bash     # af control plane + CodeAF
 af server                                               # terminal 1, dashboard on :8080
 .venv/bin/python agent.py                               # terminal 2, registers the node
-curl -X POST http://localhost:8080/api/v1/execute/docs-drift-fixer.fix_repo \
+curl -X POST http://localhost:8080/api/v1/execute/kaizen.fix_repo \
   -H 'Content-Type: application/json' -d '{"input": {"repo": "demo_repo"}}'
 ```
 

@@ -23,7 +23,7 @@ class DaytonaRunner:
         self.sandbox = self.daytona.create(
             CreateSandboxFromSnapshotParams(
                 language="python",
-                labels={"app": "docs-drift-fixer"},
+                labels={"app": "kaizen"},
                 auto_stop_interval=30,
                 auto_delete_interval=60,
             ),
@@ -64,7 +64,7 @@ class LocalRunner:
     label = "local venv (fallback — set DAYTONA_API_KEY for sandboxing)"
 
     def __init__(self):
-        self.tmp = Path(tempfile.mkdtemp(prefix="drift-"))
+        self.tmp = Path(tempfile.mkdtemp(prefix="kaizen-"))
         self.root = self.tmp / "repo"
         self.root.mkdir()
         self.id = str(self.tmp)

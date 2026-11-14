@@ -1,4 +1,4 @@
-"""The docs-drift-fixer pipeline. Yields events so UIs / agents can stream progress.
+"""The Kaizen pipeline. Yields events so UIs / agents can stream progress.
 
   1. deps      parse pins, compare with PyPI               -> drift list
   2. baseline  Daytona: install UPGRADED deps, run tests    -> what breaks
@@ -40,7 +40,7 @@ def load_repo(source: str) -> tuple[Path, str]:
     if re.match(r"^(https?://|git@)", source):
         if config.PUBLIC_MODE and not PUBLIC_GIT.match(source):
             raise ValueError("Only public GitHub / GitLab / Bitbucket HTTPS repo URLs are supported")
-        dest = Path(tempfile.mkdtemp(prefix="drift-src-"))
+        dest = Path(tempfile.mkdtemp(prefix="kaizen-src-"))
         subprocess.run(["git", "clone", "--depth", "1", "--single-branch", source, str(dest)],
                        check=True, capture_output=True, timeout=120,
                        env={**os.environ, "GIT_TERMINAL_PROMPT": "0"})
@@ -211,7 +211,7 @@ def run(source: str) -> Iterator[dict]:
 
 
 def render_report(name: str, r: dict) -> str:
-    lines = [f"# Docs-drift report: {name}", "",
+    lines = [f"# Kaizen upgrade report: {name}", "",
              f"**Result:** {'✅ tests green after upgrade' if r['ok'] else '⚠️ needs review'}  ",
              f"**Tests:** before {r['baseline']} → after {r['final']} in {r['attempts']} attempt(s)  ",
              f"**Sandbox:** {r['sandbox']} · **Model:** {r['llm']} · {r['elapsed']}s", "",
