@@ -1,0 +1,8 @@
+agentfield
+daytona
+tavily-python
+openai
+streamlit
+python-dotenv
+packaging
+requests
