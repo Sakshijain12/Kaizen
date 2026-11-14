@@ -2,7 +2,7 @@
 
 > *Kaizen* is Japanese for "continuous improvement". Your dependencies upgrade themselves: researched, rewritten and proven in a sandbox.
 
-**🌐 Live demo:** https://accessible-florence-units-pirates.trycloudflare.com
+**🌐 Live demo:** https://accessible-florence-units-pirates.trycloudflare.com · **💻 Code:** https://github.com/Sakshijain12/Kaizen
 
 **An AI agent that watches your dependencies' changelogs, finds the breaking changes that hit *your* code, rewrites it, and proves the fix by running your tests in a sandbox.**
 

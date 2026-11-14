@@ -10,7 +10,7 @@ from driftfixer import config, pipeline
 APP_NAME = "Kaizen"
 TAGLINE = "Your dependencies upgrade themselves: researched, rewritten and proven against your own tests."
 TEAM = []  # e.g. [("Your Name", "role", "https://github.com/you")]
-REPO_URL = ""  # e.g. "https://github.com/you/kaizen"
+REPO_URL = "https://github.com/Sakshijain12/Kaizen"
 
 st.set_page_config(page_title=f"{APP_NAME} · self-upgrading codebase agent", page_icon="🔴",
                    layout="wide", initial_sidebar_state="collapsed")
